@@ -1,0 +1,94 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{float}
+\title{\textbf{Smart Queue \& Crowd Prediction System}\\Project Proposal and Prototype}
+\author{Student Name: \underline{\hspace{5cm}}\\Student ID: \underline{\hspace{5cm}}\\Department: Information and Communication Technology}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Introduction}
+The Smart Queue \& Crowd Prediction System is a Java application designed to organize service queues,
+issue token numbers, estimate waiting time, and show a simple crowd-level prediction.
+\section{Problem Statement}
+Manual queues can create uncertainty about a customer's position and expected waiting time.
+This prototype demonstrates how a digital queue can make the process more organized.
+\section{Objectives}
+\begin{itemize}
+\item Generate a token number for each customer during a running session.
+\item Display customers currently waiting.
+\item Allow an operator to call the next customer.
+\item Estimate waiting time using a simple formula.
+\item Display a rule-based crowd level: LOW, MEDIUM, or HIGH.
+\end{itemize}
+\section{Technology Stack}
+\begin{itemize}
+\item Programming language: Java
+\item GUI: Java Swing
+\item Storage: in-memory only in this prototype
+\end{itemize}
+\section{Classes and Responsibilities}
+\begin{description}
+\item[\texttt{Customer}] Stores customer name and requested service.
+\item[\texttt{QueueToken}] Associates a token number with a customer.
+\item[\texttt{QueueManager}] Adds customers, calls the next customer, and estimates waiting time.
+\item[\texttt{CrowdPredictor}] Maps queue size to LOW, MEDIUM, or HIGH.
+\item[\texttt{QueueDashboard}] Provides the graphical user interface.
+\item[\texttt{SmartQueueSystem}] Starts the application.
+\end{description}
+\section{Waiting-Time Estimation}
+The prototype estimates waiting time as
+\[
+W = \left\lceil \frac{N \times S}{C} \right\rceil,
+\]
+where \(N\) is the number of people ahead, \(S\) is average service time in minutes, and \(C\)
+is the number of active counters. This is an estimate, not a guaranteed wait time.
+\section{Crowd-Level Rules}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Queue size & Crowd level \\
+\midrule
+0--5 & LOW \\
+6--15 & MEDIUM \\
+16 or more & HIGH \\
+\bottomrule
+\end{tabular}
+\end{center}
+\section{Software Process Model}
+An iterative approach is suitable: implement token creation first, then queue display and calling,
+then waiting-time estimation, and finally test and improve the GUI.
+\section{Testing Plan}
+\begin{itemize}
+\item Add a customer with valid details.
+\item Try to add a customer with missing details.
+\item Verify that token numbers increase.
+\item Call the next customer with a non-empty queue and with an empty queue.
+\item Check waiting time with valid and invalid token numbers.
+\item Verify crowd level as the queue size changes.
+\end{itemize}
+\section{Limitations and Future Work}
+The current version has no database, authentication, SMS notifications, or machine-learning prediction.
+Future versions can add MySQL persistence, admin login, QR-based tokens, notifications, and historical forecasting.
+\section{How to Run}
+From the project's \texttt{src} directory:
+\begin{lstlisting}
+javac *.java
+java SmartQueueSystem
+\end{lstlisting}
+\section{Class Diagram}
+Export the class diagram as \texttt{class-diagram.png} and place it beside this file if you wish to include it.
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.95\linewidth]{class-diagram.png}
+% \caption{Class diagram for the prototype}
+% \end{figure}
+\section{Conclusion}
+This project demonstrates a digital queue workflow using Java Swing and six cooperating classes.
+It is an academic prototype that can later be extended with persistent storage and additional features.
+\end{document}
